@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+
+{% block header %}
+<a href="{% url 'mypage' %}" class='btn btn-primary'>マイページ</a>
+<a href="{% url 'signup' %}" class='btn btn-primary'>signup</a>
+<a href="{% url 'login' %}" class='btn btn-primary'>login</a>
+<a href="{% url 'host' %}" class='btn btn-primary'>投稿</a>
+{% endblock header %}
+
+{% block content %}
+<form class="form-signin" method='post'>{% csrf_token %}
+    <div class="input-group">
+        <input type="text" class="form-control" placeholder="開催地" name='filter'>
+        <span class="input-group-btn" >
+            <button class="btn btn-default" type="submit" >検索</button>
+        </span>
+    </div>
+</form>
+
+<div class='container'>
+    {% for item in host_list %}
+    <div class='card'>
+        <h5 class='card-header'>投稿者:{{item.user}}</h5>
+        <div class='card-body'>
+            <h5 class='card-title'>性別:{{item.gender}}</h5>
+            <h5 class='card-title'>開催日程:{{item.event_date | date:"o/n/j"}}</h5>
+            <h5 class='card-title'>開催時間:{{item.event_time}}</h5>
+            <h5 class='card-title'>開催地:{{item.location}}</h5>
+            <h5 class='card-title'>人数:{{item.member}}</h5>
+            <a href="{% url 'detail' item.pk %}" class='btn btn-primary'>詳しく見る</a>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+{% endblock content %}

@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{%block content%}
+<div class='container'>
+    <div class='card'>
+        <div class='card-body'>
+            <h5 class='card-title'>投稿者：{{data.user}}</h5>
+            <h5 class='card-title'>性別：{{data.gender}}</h5>
+            <h5 class='card-title'>年齢：{{data.age}}</h5>
+            <h5 class='card-title'>email：{{data.email}}</h5>
+            <a href="{% url 'check' %}" class='btn btn=primary' role='button' aria-pressed='true'>リクエストを見る</a>
+            <a href="{% url 'index' %}" class='btn-btn-primary'>戻る</a>
+        </div>
+    </div>
+</div>
+{%endblock content%}

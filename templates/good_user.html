@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+
+{% block header %}
+{% endblock header %}
+
+{% block content %}
+<div class='container'>
+    {% for item in good_list %}
+    <div class='card'>
+        <p><img src='{{item.image.url}}' width=300></p>
+            <h5 class='card-title'>投稿者：{{item.good_user}}</h5>
+            <h5 class='card-title'>性別：{{item.gender}}</h5>
+            <h5 class='card-title'>年齢：{{item.age}}</h5>
+            <h5 class='card-title'>出身地：{{item.location}}</h5>
+            <a href="{% url 'match' item.pk %}" class='btn btn=primary' role='button' aria-pressed='true'>Match!</a>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+{% endblock content %}

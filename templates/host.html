@@ -1,0 +1,116 @@
+<!--
+<!DOCTYPE html>
+<html>
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta charset="UTF-8">
+  <title>Hosting</title>
+</head>
+<body>
+<h1>Hosting</h1>
+<form action="" method="post">{% csrf_token %}
+  <table>{{h_form.as_table}}</table>
+<p>
+    <input type="submit" value="送信する">
+</p>
+</form>
+</body>
+</html>
+-->
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta charset="UTF-8">
+    <title>Hosting</title>
+  </head>
+
+  <body>
+    <form class="needs-validation" method="POST" novalidate>{% csrf_token %}
+      <!--人数-->
+      <div class="form-row mb-4">
+        <div class="col-md-6">
+            <label for="member">人数</label>
+            <input type="number" class="form-control" name="member" placeholder="人数" required>
+        </div>
+    　</div>
+    　<!--/年齢-->
+
+      <!--日程-->
+      <div class="form-row mb-4">
+        <div class="col-md-6">
+            <label for="event_date">開催日</label>
+            <input type="date" name="event_date">
+        </div>
+      </div>
+      <div class="form-row mb-4">
+        <div class="col-md-6">
+            <label for="event_time">開催時刻</label>
+            <input type="time" name="event_time">
+        </div>
+      </div>
+    　<!--/日程-->
+
+    <!--開催地-->
+    <div class="form-row mb-4">
+      <div class="col-md-6">
+        <label for="example">選択肢</label>
+        <select id="example" name='location'>
+          {% for key in key_list %}
+          <option value={{key}} name='location'>{{key}}</option>
+          {% endfor %}
+        </select>
+      </div>
+  　</div>
+
+  <select id='output'></select>
+      
+      <script type="text/javascript">
+      //選択肢のオブジェクトを格納
+      let form = document.forms[0];
+      let selectbox = form.example;
+
+      //JSONデータを格納
+      data = JSON.parse('{{ item|safe }}');
+      
+      
+      //console.log(selectbox);
+
+      selectbox.addEventListener('change', ()=> {
+        index = selectbox.selectedIndex; //選択されたoptionのindexを取得
+        selector = selectbox.options[index].value; //選択されたoptionのvalueを取得
+
+          console.log(data[selector]);
+            //親要素の指定
+            var e = document.getElementById("output");
+            //要素の削除
+            while(e.firstChild){
+            e.removeChild(e.firstChild);
+            }
+            //iterate
+            for (var value of data[selector]) {
+            console.log(value);
+            //子要素の指定
+            var a = document.createElement("option");
+            a.setAttribute("name", "selection");
+            a.innerHTML = value;
+            //要素の追加
+            e.appendChild(a);
+          }
+      }, false);
+      </script>
+    <!--/開催地-->
+
+      <!--ボタンブロック-->
+      <div class="form-group row">
+          <div class="col-sm-12">
+              <button type="submit" class="btn btn-primary btn-block">投稿</button>
+          </div>
+      </div>
+      <!--/ボタンブロック-->
+
+
+    </form>
+  </body>
+</html>

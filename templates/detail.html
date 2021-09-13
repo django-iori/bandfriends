@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block header %}
+
+{% endblock header %}
+
+{%block content%}
+<div class='container'>
+    <div class='card'>
+        <div class='card-body'>
+            <p><img src='{{object.image.url}}' width=300></p>
+            <h5 class='card-title'>投稿者：{{object.user}}</h5>
+            <h5 class='card-title'>性別：{{object.gender}}</h5>
+            <h5 class='card-title'>開催日程：{{object.event_date}}</h5>
+            <h5 class='card-title'>開催時間:{{object.event_time}}</h5>
+            <h5 class='card-title'>開催地：{{object.location}}</h5>
+            <h5 class='card-title'>人数:{{object.member}}</h5>
+            <h5 class='card-title'>いいね数:{{object.good_counts}}</h5>
+            <a href="{% url 'evaluation' object.pk %}" class='btn btn=primary' role='button' aria-pressed='true'>Good!</a>
+            <a href="{% url 'index' %}" class='btn-btn-primary'>戻る</a>
+        </div>
+    </div>
+</div>
+{%endblock content%}

@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta charset="UTF-8">
+  <title>Register</title>
+</head>
+<body>
+<h1>Register</h1>
+<form action="" method="post">{% csrf_token %}
+  <table>{{form.as_table}}</table>
+<p>
+    <input type="submit" value="送信する">
+</p>
+</form>
+</body>
+</html>
