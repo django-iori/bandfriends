@@ -1,6 +1,6 @@
 from django.contrib import admin
 from django.urls import path, include
-from .views import imageview, signupview, registerview, loginview, indexview, detailview, mypageview, evaluationview, checkview, hostview
+from .views import *
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -14,4 +14,6 @@ urlpatterns = [
     path('check/', checkview, name='check'),
     path('host/', hostview, name='host'),
     path('image/', imageview, name='image'),
+    path('match/<int:pk>', matchview, name='match'),
+    path('chat/<str:room_name>/', chatview, name='chat')
 ]

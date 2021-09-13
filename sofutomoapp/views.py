@@ -168,7 +168,6 @@ def evaluationview(request, pk):
             return redirect('index')
 
 def checkview(request):
-    a=HostModel.objects.get(user=request.user)
     good_list=GoodModel.objects.filter(user=request.user)
 
     params={
@@ -204,3 +203,19 @@ def hostview(request):
         data = joblib.load( "osaka.txt")
         key_list = list(data.keys())
         return render(request, 'host.html', {'h_form':h_form, 'item': json.dumps(data), 'key_list': key_list})
+
+def matchview(request,pk):
+    name1 = request.user.username
+    name2 = GoodModel.objects.get(pk=pk).good_user
+    name = name1 + '&' + name2
+
+    room = Room()
+    room.name = name
+    room.save()
+
+    return redirect('http://127.0.0.1:8000/chat/{}'.format(name))
+
+def chatview(request, room_name):
+    return render(request, 'chat_room.html', {
+        'room_name': room_name
+    })
