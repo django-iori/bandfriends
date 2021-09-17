@@ -27,9 +27,6 @@ class HostModel(models.Model):
     event_date = models.DateField(null=True, blank=True)
     event_time = models.TimeField(null=True, blank=True)
 
-class ImageModel(models.Model):
-    image=models.ImageField(upload_to='')
-
 class GoodModel(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     good_user = models.CharField(max_length=20, blank=True)
@@ -37,6 +34,11 @@ class GoodModel(models.Model):
     #image = models.ImageField(upload_to='')
     age = models.IntegerField(null=True, blank=True, default=0)
     email = models.EmailField(max_length=240)
+
+class MatchModel(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    name = models.CharField(max_length=20, blank=True)
+    room_name = models.CharField(max_length=50)
 
 class Room(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4)

@@ -15,5 +15,6 @@ urlpatterns = [
     path('host/', hostview, name='host'),
     path('image/', imageview, name='image'),
     path('match/<int:pk>', matchview, name='match'),
-    path('chat/<str:room_name>/', chatview, name='chat')
+    path('chat/<str:room_name>/<str:self_name>', chatview, name='chat'),
+    path('talk_room', talk_roomview, name='talk_room')
 ]

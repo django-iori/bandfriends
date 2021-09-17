@@ -1,5 +1,8 @@
 {% extends 'base.html' %}
 {% load static %}
+{% block header %}
+<a href="{% url 'talk_room' %}" class='btn btn-primary'>Talk</a>
+{% endblock header %}
 
 {%block content%}
 <div class='container'>

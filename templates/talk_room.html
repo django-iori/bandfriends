@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+
+{% block header %}
+{% endblock header %}
+
+{% block content %}
+<div class='container'>
+    {% for item in match_list %}
+    <div class='card'>
+            <h5 class='card-title'>名前：{{item.name}}</h5>
+            <a href="{% url 'chat' item.room_name self_name %}" class='btn btn=primary' role='button' aria-pressed='true'>Talk Room</a>
+        </div>
+    </div>
+    
+    {% endfor %}
+</div>
+{% endblock content %}

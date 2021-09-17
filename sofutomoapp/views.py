@@ -3,7 +3,7 @@ from django.contrib.auth.models import User
 from django.db import IntegrityError
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.decorators import login_required
-from .models import GuestModel, HostModel, ImageModel, GoodModel
+from .models import *
 from django.views.generic import CreateView
 from .forms import ImageForm, RegisterForm, HostForm
 import requests
@@ -207,15 +207,43 @@ def hostview(request):
 def matchview(request,pk):
     name1 = request.user.username
     name2 = GoodModel.objects.get(pk=pk).good_user
-    name = name1 + '&' + name2
-
+    name = name1 + '_' + name2
+    #ルームの作成
     room = Room()
     room.name = name
     room.save()
+    #マッチした人の情報
+    match_host = MatchModel()
+    match_host.user = request.user
+    match_host.name = name2
+    match_host.room_name = name
+    match_host.save()
+    match_guest = MatchModel()
+    match_guest.user = User.objects.get(username=name2)
+    match_guest.name = name1
+    match_guest.room_name = name
+    match_guest.save()
+    #GoodModelの削除
+    good = GoodModel.objects.get(user=request.user, good_user=name2)
+    good.delete()
 
-    return redirect('http://127.0.0.1:8000/chat/{}'.format(name))
+    return redirect('http://127.0.0.1:8000/chat/{0}/{1}'.format(name,name1))
 
-def chatview(request, room_name):
+def chatview(request, room_name, self_name):
+    room = Room.objects.get(name=room_name)
+    log_list = Message.objects.filter(room=room).order_by('created_at')
+    
+    
     return render(request, 'chat_room.html', {
-        'room_name': room_name
+        'room_name': room_name,
+        'self_name': self_name,
+        'log_list': log_list
+    })
+
+def talk_roomview(request):
+    match_list = MatchModel.objects.filter(user=request.user)
+    print(match_list)
+    return render(request, 'talk_room.html', {
+        'match_list': match_list,
+        'self_name': request.user.username
     })
